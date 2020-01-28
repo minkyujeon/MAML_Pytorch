@@ -44,6 +44,7 @@ class Omniglot(data.Dataset):
 		target = self.idx_classes[self.all_items[index][1]]
 		if self.transform is not None:
 			img = self.transform(img)
+
 		if self.target_transform is not None:
 			target = self.target_transform(target)
 

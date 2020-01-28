@@ -32,14 +32,14 @@ class Net(nn.Module):
                                nn.ReLU(inplace=True),
                                nn.Linear(64, n_way))
         
-        self.criterion = nn.CrossEntropyLoss()
+        self.loss = nn.CrossEntropyLoss()
         
     def forward(self, x, target):
-        # print('x:',x.shape) # [5, 1, 28, 28]
+        # x:[5, 1, 28, 28] : 5 way 1 shot
         x = self.net(x)
         x = x.view(-1, 64)
         pred = self.fc(x)
-        loss = self.criterion(pred, target)
+        loss = self.loss(pred, target)
         
         return loss, pred
     
@@ -60,7 +60,7 @@ def main():
     
     for episode_num in range(100):
         support_x, support_y, query_x, query_y = omni_data.get_batch('train') # train에 대한 support, query
-        # print('support_x:',support_x.shape) # [32, 5, 1, 28, 28]
+        # support_x : [32, 5, 1, 28, 28]
         support_x = torch.from_numpy(support_x).float().cuda()
         query_x = torch.from_numpy(query_x).float().cuda()
         support_y = torch.from_numpy(support_y).long().cuda()
@@ -76,10 +76,10 @@ def main():
             query_x = torch.from_numpy(query_x).float().cuda()
             support_y = torch.from_numpy(support_y).long().cuda()
             query_y = torch.from_numpy(query_y).long().cuda()
-        
+
             test_acc = meta.pred(support_x, support_y, query_x, query_y)
             test_accs.append(test_acc)
-            
+
             test_acc = np.array(test_accs).mean()
             print('episode:',episode_num, '\tfintune acc:%.6f' % train_acc, '\t\ttest acc:%.6f' % test_acc)
     
