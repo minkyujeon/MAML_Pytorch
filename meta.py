@@ -5,8 +5,6 @@ from torch import autograd
 import numpy as np
 
 class Learner(nn.Module):
-    # 매 episode마다 theta와 meta-train set을 이용하여 phi를 update
-    # 매 episode마다 phi와 meta-test set을 이용하여 theta를 update
     
     def __init__(self, net, alpha, *args):
         super(Learner, self).__init__()
