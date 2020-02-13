@@ -42,7 +42,7 @@ class Learner(nn.Module):
         acc = correct/query_y.size(0)
 
         # create_grad=True로 하면 autograd.grad 후에도 backward를 다시 호출 가능(Hessian을 위함)
-        gradient_phi = autograd.grad(loss, self.net_phi.parameters(), create_graph=False) #create_graph : for second derivative
+        gradient_phi = autograd.grad(loss, self.net_phi.parameters(), create_graph=True) #create_graph : for second derivative
 
         return loss, gradient_phi, acc
 
