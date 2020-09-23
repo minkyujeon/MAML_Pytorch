@@ -89,10 +89,10 @@ class OmniglotNShot():
 
                 selected_cls = np.random.choice(data_pack.shape[0], self.n_way, replace=False)
                 for j, cur_class in enumerate(selected_cls):
-                    # 이 cur_class가 meta_test에 있는 case count
-                    selected_imgs = np.random.choice(data_pack.shape[1], self.k_shot+self.k_query, replace=False) # 20개 중 k_shot + k_query개 뽑음
+                    # cur_class : count the case in meta_test
+                    selected_imgs = np.random.choice(data_pack.shape[1], self.k_shot+self.k_query, replace=False) # # Select k_shot + k_query in 20
 
-                    # meta-train dataset에서 support와 query set 나누기
+                    # Divide support and query set in meta-train dataset
                     # support_set for meta training
                     for offset, img in enumerate(selected_imgs[:self.k_shot]):
                         # i :batch_idx, cur_class : class in n_way
@@ -117,6 +117,6 @@ class OmniglotNShot():
 
         # len(self.datasets_cache['train'])) : 100
         next_batch = self.datasets_cache[mode][self.indexes[mode]]
-        self.indexes[mode] += 1 #100까지 올라감
+        self.indexes[mode] += 1 
 
         return next_batch

@@ -59,7 +59,7 @@ def main():
                        alpha=0.1, beta=meta_lr, num_updates=num_updates).cuda()
     
     for episode_num in range(100):
-        support_x, support_y, query_x, query_y = omni_data.get_batch('train') # train에 대한 support, query
+        support_x, support_y, query_x, query_y = omni_data.get_batch('train') # support, query for train
         # support_x : [32, 5, 1, 28, 28]
         support_x = torch.from_numpy(support_x).float().cuda()
         query_x = torch.from_numpy(query_x).float().cuda()
@@ -71,7 +71,7 @@ def main():
         if episode_num % 30 == 0:
             test_accs = []
 
-            support_x, support_y, query_x, query_y = omni_data.get_batch('test') # test에 대한 support, query
+            support_x, support_y, query_x, query_y = omni_data.get_batch('test') # support, query for test
             support_x = torch.from_numpy(support_x).float().cuda()
             query_x = torch.from_numpy(query_x).float().cuda()
             support_y = torch.from_numpy(support_y).long().cuda()
